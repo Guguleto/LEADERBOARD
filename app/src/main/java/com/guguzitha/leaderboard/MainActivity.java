@@ -1,12 +1,28 @@
 package com.guguzitha.leaderboard;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.guguzitha.leaderboard.model.LearnersHours;
+import com.guguzitha.leaderboard.services.LearningService;
+import com.guguzitha.leaderboard.services.ServiceBuilder;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private TabItem mLearning_tab;
     private TabItem mSkillIq_tab;
     private PagerAdapter mPagerAdapter;
+    private Adapter mAdapter;
+    private RecyclerView listLearners;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         mLearning_tab = findViewById(R.id.learning_tab);
         mSkillIq_tab = findViewById(R.id.skillIq_tab);
         mViewPager = findViewById(R.id.viewpager);
+
+
 
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), mTabLayout.
                 getTabCount());
@@ -54,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+
+
 
 
 

@@ -1,6 +1,5 @@
 package com.guguzitha.leaderboard;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -18,9 +17,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new LearningLeader();
+                return new LearnerHoursFragment();
             case 1:
-                return new SkillIqLeader();
+                return new SkillIqListFragment();
             default:
                 return null;
         }

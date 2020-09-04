@@ -23,7 +23,7 @@ public class ServiceBuilder {
 
     private static Retrofit sRetrofit = sBuilder.build();
 
-    public static <S> S createService(Class<S> serviceClass) {
+    public static <service> service createService(Class<service> serviceClass) {
         return sRetrofit.create(serviceClass);
     }
 
