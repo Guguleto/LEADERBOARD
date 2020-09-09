@@ -27,9 +27,6 @@ public class LearnerAdapter extends RecyclerView.Adapter<LearnerAdapter.MyViewHo
     }
 
 
-
-
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,7 +40,7 @@ public class LearnerAdapter extends RecyclerView.Adapter<LearnerAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.textV_Name.setText(dataList.get(position).getName());
-        holder.textV_Hours.setText(dataList.get(position).getHours());
+        holder.textV_Hours.setText(String.valueOf(dataList.get(position).getHours()));
         holder.textV_Country.setText(dataList.get(position).getCountry());
 
 
@@ -67,6 +64,7 @@ public class LearnerAdapter extends RecyclerView.Adapter<LearnerAdapter.MyViewHo
         TextView textV_Name;
         TextView textV_Hours;
         TextView textV_Country;
+        TextView textV_learning_Hours;
         private ImageView img;
 
         public MyViewHolder(@NonNull View itemView) {

@@ -3,6 +3,7 @@ package com.guguzitha.leaderboard.services;
 
 
 import com.guguzitha.leaderboard.model.LearnersHours;
+import com.guguzitha.leaderboard.model.SkillIq;
 
 import java.util.List;
 

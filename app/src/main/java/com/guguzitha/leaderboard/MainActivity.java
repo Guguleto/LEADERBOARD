@@ -1,13 +1,19 @@
 package com.guguzitha.leaderboard;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private PagerAdapter mPagerAdapter;
     private Adapter mAdapter;
     private RecyclerView listLearners;
+    private MenuItem mSubmit;
 
 
     @Override
@@ -46,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.viewpager);
 
 
-
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), mTabLayout.
                 getTabCount());
 
@@ -57,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
-                if(tab.getPosition()== 0){
+                if (tab.getPosition() == 0) {
                     mPagerAdapter.notifyDataSetChanged();
-                }else if (tab.getPosition() == 1){
+                } else if (tab.getPosition() == 1) {
                     mPagerAdapter.notifyDataSetChanged();
                 }
             }
@@ -76,9 +82,33 @@ public class MainActivity extends AppCompatActivity {
         });
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
 
-
-
+        return true;
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_submit) {
+            Intent intent = new Intent(MainActivity.this, SubmissionActivity.class);
+            startActivity(intent);
+            return true;
+
+        }
+        return onOptionsItemSelected(item);
+    }
 }
+
+
+
+
+
+
+

@@ -3,20 +3,17 @@ package com.guguzitha.leaderboard.model;
 import com.google.gson.annotations.SerializedName;
 
 public class SkillIq {
-    @SerializedName("name")
+
     private String name;
-    @SerializedName("score")
     private Integer score;
-    @SerializedName("country")
     private String country;
-    @SerializedName("badgeUrl")
     private String badgeUrl;
 
-    public SkillIq(String name, Integer score, String country, String url) {
+    public SkillIq(String name, Integer score, String country, String badgeUrl) {
         this.name = name;
         this.score = score;
         this.country = country;
-        this.badgeUrl = url;
+        this.badgeUrl = badgeUrl;
     }
 
     public String getName() {

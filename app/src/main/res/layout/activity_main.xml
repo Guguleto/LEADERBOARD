@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -14,14 +15,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabTextColor="@color/white">
+        app:tabTextColor="@color/white"
+       >
 
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/learning_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/learning_leaders" />
+            android:text="@string/learning_leaders"
+            />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/skillIq_tab"

@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +29,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.guguzitha.leaderboard.services.ServiceBuilder.createService;
+
 
 public class LearnerHoursFragment extends Fragment {
     View mView;
@@ -40,6 +43,7 @@ public class LearnerHoursFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_learning_leader, container, false);
+
         return mView;
     }
 
@@ -50,32 +54,34 @@ public class LearnerHoursFragment extends Fragment {
         listLearners = view.findViewById(R.id.learners);
         fetchHours();
     }
-        private void fetchHours() {
-            //initialize service
-            LearningService service = new ServiceBuilder().createService(LearningService.class);
-            //Get data
-            Call<List<LearnersHours>> hours = service.getHours();
-            hours.enqueue(new Callback<List<LearnersHours>>() {
-                @Override
-                public void onResponse(Call<List<LearnersHours>> call, Response<List<LearnersHours>> response) {
-                    Log.d("Gugu", "onResponse: loading data" + response.message());
-                    generateDataList(response.body());
-                }
 
-                @Override
-                public void onFailure(Call<List<LearnersHours>> call, Throwable t) {
 
-                }
-            });
-        }
+
+    private void fetchHours() {
+        //initialize service
+        LearningService service = ServiceBuilder.createService(LearningService.class);
+        //Get data
+        Call<List<LearnersHours>> hours = service.getHours();
+        hours.enqueue(new Callback<List<LearnersHours>>() {
+            @Override
+            public void onResponse(Call<List<LearnersHours>> call, Response<List<LearnersHours>> response) {
+                Log.d("Gugu", "onResponse: loading data" + response.message());
+                generateDataList(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<LearnersHours>> call, Throwable t) {
+
+
+            }
+        });
+    }
     private void generateDataList(List<LearnersHours> dataList){
         listLearners =mView.findViewById(R.id.learners);
-        mAdapter = new LearnerAdapter(getContext(),dataList);
+        LearnerAdapter learnerAdapter = new LearnerAdapter(getContext(),dataList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         listLearners.setLayoutManager(layoutManager);
-        listLearners.setAdapter((RecyclerView.Adapter) mAdapter);
-
-
+        listLearners.setAdapter(learnerAdapter);
 
     }
 }
