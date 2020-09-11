@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    android:id="@+id/myToolbar">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/leaderBoard"
+        android:text="LEADERBOARD"
+        android:textSize="20dp"
+        android:layout_marginLeft="0dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="90dp"
+        android:background="@drawable/submitborder"
+        android:hint="Submit"
+        android:textSize="20dp"
+        />
+</androidx.appcompat.widget.Toolbar>

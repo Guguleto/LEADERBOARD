@@ -7,6 +7,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.guguzitha.leaderboard.model.UsersForm;
 import com.guguzitha.leaderboard.services.FormService;
@@ -41,34 +44,53 @@ public class SubmissionActivity extends AppCompatActivity {
     private EditText mLastName;
     private EditText mEmail;
     private EditText mGithubLink;
+    private Context context = this;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submission);
-        sendRequest();
+
 
         mName = (EditText) findViewById(R.id.name);
         mLastName = (EditText) findViewById(R.id.last_name);
         mEmail = (EditText) findViewById(R.id.email_address);
         mGithubLink = (EditText) findViewById(R.id.github_link);
 
+
+
         SubmitBotton = (Button) findViewById(R.id.submit_button);
         SubmitBotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mName == null || (mLastName == null || mEmail == null || mGithubLink == null)) {
-                    mName.setError("Enter name");
-                    mLastName.setError("Enter last name");
-                    mEmail.setError("Enter email address");
-                    mGithubLink.setError("Enter gitHub link");
+                sendRequest(mName.getText().toString(),
+                        mLastName.getText().toString(),
+                        mEmail.getText().toString(),
+                        mGithubLink.getText().toString());
+
+                if (mName.getText().toString().isEmpty()||
+                        mLastName.getText().toString().isEmpty()||
+                        mEmail.getText().toString().isEmpty()||
+                        mGithubLink.getText().toString().isEmpty()){
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Alert");
+                    builder.setMessage("Some fields Empty");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
                 } else {
                     showSubmitConfirmation();
                 }
-
             }
+
         });
+
     }
 
     private void showSubmitConfirmation() {
@@ -102,16 +124,13 @@ public class SubmissionActivity extends AppCompatActivity {
 
     }
 
-    private void sendRequest() {
-        String firstName = mName.getText().toString();
-        String lastName = mLastName.getText().toString();
-        String emailAddress = mEmail.getText().toString();
-        String projectLink = mGithubLink.getText().toString();
-
+    private void sendRequest(String name, String lstName, String email,
+                             String Link) {
 
         FormService service = FormServiceBuilder.createService(FormService.class);
-        Call<UsersForm> usersFormCall = service.submitForm(firstName, lastName,
-                emailAddress, projectLink);
+
+        Call<UsersForm> usersFormCall = service.submitForm(name, lstName,
+                email, Link);
         usersFormCall.enqueue(new Callback<UsersForm>() {
             @Override
             public void onResponse(Call<UsersForm> call, Response<UsersForm> response) {
