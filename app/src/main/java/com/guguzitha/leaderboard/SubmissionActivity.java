@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -52,6 +53,10 @@ public class SubmissionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submission);
 
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setMessage("Loading...");
+
 
         mName = (EditText) findViewById(R.id.name);
         mLastName = (EditText) findViewById(R.id.last_name);
@@ -81,9 +86,14 @@ public class SubmissionActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
+                            Intent intent = new Intent(SubmissionActivity.ACCESSIBILITY_SERVICE);
+
                         }
                     });
                     builder.show();
+
+
+
                 } else {
                     showSubmitConfirmation();
                 }
@@ -101,6 +111,11 @@ public class SubmissionActivity extends AppCompatActivity {
         closePopUpDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendRequest(mName.getText().toString(),
+                        mLastName.getText().toString(),
+                        mEmail.getText().toString(),
+                        mGithubLink.getText().toString());
+
                 confirmationDialog.dismiss();
             }
         });
