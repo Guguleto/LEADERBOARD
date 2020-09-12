@@ -37,8 +37,8 @@ import retrofit2.Response;
 
 public class SubmissionActivity extends AppCompatActivity {
     AlertDialog.Builder confirmationDialog;
-    AlertDialog.Builder failureDialog;
-    AlertDialog.Builder successDialog;
+    Dialog failureDialog;
+    Dialog successDialog;
     ProgressDialog mProgressDialog;
     private Button SubmitBotton;
     private EditText mName;
@@ -111,8 +111,6 @@ public class SubmissionActivity extends AppCompatActivity {
     private void showSubmitConfirmation() {
         View view = initView(R.layout.confirmation_dialog_box);
         confirmationDialog = initDialog(view);
-
-
         final AlertDialog dialog = confirmationDialog.create();
 
 
@@ -122,11 +120,16 @@ public class SubmissionActivity extends AppCompatActivity {
         closePopUpDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        SubmitBotton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 sendRequest(mName.getText().toString(),
                         mLastName.getText().toString(),
                         mEmail.getText().toString(),
                         mGithubLink.getText().toString());
-                dialog.dismiss();
             }
         });
 
@@ -134,23 +137,15 @@ public class SubmissionActivity extends AppCompatActivity {
 
     }
     private void showErrorDialog(){
-        View view = initView(R.layout.failure_dialog);
-        failureDialog = initDialog(view);
-        final AlertDialog dialog = failureDialog.create();
-
-        dialog.getWindow().setLayout(
-                LinearLayout.LayoutParams.MATCH_PARENT,
+        failureDialog.setContentView(R.layout.failure_dialog);
+        failureDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         failureDialog.show();
 
     }
     private void showSuccessDialog(){
-        View view = initView(R.layout.success_dialog);
-        successDialog = initDialog(view);
-        final AlertDialog dialog = successDialog.create();
-
-
-        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
+        successDialog.setContentView(R.layout.success_dialog);
+        successDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         successDialog.show();
 
