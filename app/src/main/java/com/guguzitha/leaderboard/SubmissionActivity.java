@@ -37,8 +37,8 @@ import retrofit2.Response;
 
 public class SubmissionActivity extends AppCompatActivity {
     AlertDialog.Builder confirmationDialog;
-    Dialog failureDialog;
-    Dialog successDialog;
+    AlertDialog.Builder failureDialog;
+    AlertDialog.Builder successDialog;
     ProgressDialog mProgressDialog;
     private Button SubmitBotton;
     private EditText mName;
@@ -139,16 +139,22 @@ public class SubmissionActivity extends AppCompatActivity {
     }
 
     private void showErrorDialog() {
-        failureDialog.setContentView(R.layout.failure_dialog);
-        failureDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
+        View view = initView(R.layout.failure_dialog);
+        failureDialog = initDialog(view);
+        final AlertDialog dialog = failureDialog.create();
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         failureDialog.show();
 
     }
 
     private void showSuccessDialog() {
-        successDialog.setContentView(R.layout.success_dialog);
-        successDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
+        View view = initView(R.layout.success_dialog);
+        successDialog = initDialog(view);
+        final AlertDialog dialog = successDialog.create();
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         successDialog.show();
 
