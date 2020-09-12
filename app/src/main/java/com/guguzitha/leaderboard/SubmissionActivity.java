@@ -98,12 +98,13 @@ public class SubmissionActivity extends AppCompatActivity {
 
         });
     }
+
     View initView(int layout) {
-       return LayoutInflater.from(context).inflate(layout, null, false);
+        return LayoutInflater.from(context).inflate(layout, null, false);
 
     }
 
-    AlertDialog.Builder initDialog(View view){
+    AlertDialog.Builder initDialog(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         return builder.setView(view);
     }
@@ -136,14 +137,16 @@ public class SubmissionActivity extends AppCompatActivity {
         confirmationDialog.show();
 
     }
-    private void showErrorDialog(){
+
+    private void showErrorDialog() {
         failureDialog.setContentView(R.layout.failure_dialog);
         failureDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         failureDialog.show();
 
     }
-    private void showSuccessDialog(){
+
+    private void showSuccessDialog() {
         successDialog.setContentView(R.layout.success_dialog);
         successDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -156,32 +159,34 @@ public class SubmissionActivity extends AppCompatActivity {
 
         FormService service = FormServiceBuilder.createService(FormService.class);
 
-        Call<UsersForm> usersFormCall = service.submitForm(name, lstName,
+        Call<Void> usersFormCall = service.submitForm(name, lstName,
                 email, Link);
-        usersFormCall.enqueue(new Callback<UsersForm>() {
+        usersFormCall.enqueue(new Callback<Void>() {
+
+
             @Override
-            public void onResponse(Call<UsersForm> call, Response<UsersForm> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (!response.isSuccessful()) {
                     mProgressDialog.dismiss();
                     showErrorDialog();
-                }else {
+                } else {
                     showSuccessDialog();
                 }
-
 
             }
 
             @Override
-            public void onFailure(Call<UsersForm> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 mProgressDialog.dismiss();
                 showErrorDialog();
                 Log.d("Gugu", "onResponse: unsuccessful" + t.getMessage());
-
             }
         });
-
     }
 }
+
+
+
 
 
          
