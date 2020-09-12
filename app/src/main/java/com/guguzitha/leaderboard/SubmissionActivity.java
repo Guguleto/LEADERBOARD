@@ -36,9 +36,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SubmissionActivity extends AppCompatActivity {
-    Dialog confirmationDialog;
-    Dialog failureDialog;
-    Dialog successDialog;
+    AlertDialog.Builder confirmationDialog;
+    AlertDialog.Builder failureDialog;
+    AlertDialog.Builder successDialog;
     ProgressDialog mProgressDialog;
     private Button SubmitBotton;
     private EditText mName;
@@ -64,7 +64,6 @@ public class SubmissionActivity extends AppCompatActivity {
         mGithubLink = (EditText) findViewById(R.id.github_link);
 
 
-
         SubmitBotton = (Button) findViewById(R.id.submit_button);
         SubmitBotton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +73,10 @@ public class SubmissionActivity extends AppCompatActivity {
                         mEmail.getText().toString(),
                         mGithubLink.getText().toString());
 
-                if (mName.getText().toString().isEmpty()||
-                        mLastName.getText().toString().isEmpty()||
-                        mEmail.getText().toString().isEmpty()||
-                        mGithubLink.getText().toString().isEmpty()){
+                if (mName.getText().toString().isEmpty() &&
+                        mLastName.getText().toString().isEmpty() &&
+                        mEmail.getText().toString().isEmpty() &&
+                        mGithubLink.getText().toString().isEmpty()) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("Alert");
@@ -86,27 +85,39 @@ public class SubmissionActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
-                            Intent intent = new Intent(SubmissionActivity.ACCESSIBILITY_SERVICE);
-
                         }
                     });
                     builder.show();
 
 
-
                 } else {
+                    confirmationDialog = new AlertDialog.Builder(context);
                     showSubmitConfirmation();
                 }
             }
 
         });
+    }
+    View initView(int layout) {
+       return LayoutInflater.from(context).inflate(layout, null, false);
 
     }
 
+    AlertDialog.Builder initDialog(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        return builder.setView(view);
+    }
+
     private void showSubmitConfirmation() {
-        confirmationDialog.setContentView(R.layout.confirmation_dialog_box);
-        ImageView closePopUpDialog = (ImageView) confirmationDialog.findViewById(R.id.back_arrow);
-        SubmitBotton = (Button) confirmationDialog.findViewById(R.id.submit_button);
+        View view = initView(R.layout.confirmation_dialog_box);
+        confirmationDialog = initDialog(view);
+
+
+        final AlertDialog dialog = confirmationDialog.create();
+
+
+        ImageView closePopUpDialog = (ImageView) view.findViewById(R.id.back_arrow);
+        SubmitBotton = (Button) view.findViewById(R.id.yesButton);
 
         closePopUpDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,25 +126,31 @@ public class SubmissionActivity extends AppCompatActivity {
                         mLastName.getText().toString(),
                         mEmail.getText().toString(),
                         mGithubLink.getText().toString());
-
-                confirmationDialog.dismiss();
+                dialog.dismiss();
             }
         });
-        confirmationDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
+
         confirmationDialog.show();
 
     }
     private void showErrorDialog(){
-        failureDialog.setContentView(R.layout.failure_dialog);
-        failureDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
+        View view = initView(R.layout.failure_dialog);
+        failureDialog = initDialog(view);
+        final AlertDialog dialog = failureDialog.create();
+
+        dialog.getWindow().setLayout(
+                LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         failureDialog.show();
 
     }
     private void showSuccessDialog(){
-        successDialog.setContentView(R.layout.success_dialog);
-        successDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
+        View view = initView(R.layout.success_dialog);
+        successDialog = initDialog(view);
+        final AlertDialog dialog = successDialog.create();
+
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         successDialog.show();
 
@@ -152,9 +169,11 @@ public class SubmissionActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     mProgressDialog.dismiss();
                     showErrorDialog();
+                }else {
+                    showSuccessDialog();
                 }
 
-                showSuccessDialog();
+
             }
 
             @Override

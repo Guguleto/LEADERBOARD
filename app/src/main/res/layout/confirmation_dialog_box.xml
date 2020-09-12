@@ -10,31 +10,33 @@
 
     <ImageView
         android:id="@+id/back_arrow"
-        android:layout_width="95dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="44dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_arrow_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/ic_arrow_back" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="44dp"
         android:id="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="are you sure"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.546"
         app:layout_constraintStart_toStartOf="parent"
-        android:textStyle="bold" android:textSize="24sp"
-        android:text="are you sure"/>
+        app:layout_constraintTop_toBottomOf="@id/back_arrow" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         android:layout_marginTop="76dp"
-        android:id="@+id/button"
+        android:id="@+id/yesButton"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         android:text="yes"
