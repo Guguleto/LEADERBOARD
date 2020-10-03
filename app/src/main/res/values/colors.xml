@@ -5,9 +5,10 @@
     <color name="colorAccent">#3044B1</color>
 
 <!--    fragments-->
-    <color name="white">#F6F6FA</color>
+    <color name="white">#FFFFFF</color>
     <color name="black">#0E0D0D</color>
     <color name="yellow">#FFC107</color>
+    <color name="grey">#5C5B5B</color>
 
 
 </resources>

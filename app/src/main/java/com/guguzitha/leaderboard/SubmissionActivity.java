@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.guguzitha.leaderboard.model.UsersForm;
@@ -110,18 +111,18 @@ public class SubmissionActivity extends AppCompatActivity {
     }
 
     private void showSubmitConfirmation() {
-        View view = initView(R.layout.confirmation_dialog_box);
+        final View view = initView(R.layout.confirmation_dialog_box);
         confirmationDialog = initDialog(view);
         final AlertDialog dialog = confirmationDialog.create();
 
-
-        ImageView closePopUpDialog = (ImageView) view.findViewById(R.id.back_arrow);
+        Button closePopUpDialog = (Button) view.findViewById(R.id.cancel);
         SubmitBotton = (Button) view.findViewById(R.id.yesButton);
 
         closePopUpDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+
             }
         });
         SubmitBotton.setOnClickListener(new View.OnClickListener() {
@@ -131,32 +132,42 @@ public class SubmissionActivity extends AppCompatActivity {
                         mLastName.getText().toString(),
                         mEmail.getText().toString(),
                         mGithubLink.getText().toString());
+                mProgressDialog.show();
+
+
             }
         });
 
         confirmationDialog.show();
 
+
     }
 
     private void showErrorDialog() {
-        View view = initView(R.layout.failure_dialog);
-        failureDialog = initDialog(view);
-        final AlertDialog dialog = failureDialog.create();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(R.layout.failure_dialog);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
 
-        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        failureDialog.show();
 
     }
 
     private void showSuccessDialog() {
-        View view = initView(R.layout.success_dialog);
-        successDialog = initDialog(view);
-        final AlertDialog dialog = successDialog.create();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(R.layout.success_dialog);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
 
-        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        successDialog.show();
 
     }
 
@@ -172,13 +183,11 @@ public class SubmissionActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (!response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     mProgressDialog.dismiss();
-                    showErrorDialog();
-                } else {
                     showSuccessDialog();
+                    Log.d("Gugu", "onResponse: successful" + response.message());
                 }
-
             }
 
             @Override

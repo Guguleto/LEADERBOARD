@@ -71,6 +71,7 @@ public class LearnerHoursFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<LearnersHours>> call, Throwable t) {
+                Log.d("Gugu", "onResponse: failed" + t.getMessage());
 
 
             }

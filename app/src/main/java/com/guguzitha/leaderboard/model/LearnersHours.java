@@ -1,6 +1,6 @@
 package com.guguzitha.leaderboard.model;
 
-import com.google.gson.annotations.SerializedName;
+
 
 public class LearnersHours {
 

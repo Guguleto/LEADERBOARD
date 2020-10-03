@@ -1,11 +1,19 @@
 package com.guguzitha.leaderboard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +24,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.zip.Inflater;
+
+import static com.guguzitha.leaderboard.R.layout.actionbar;
+
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
@@ -23,10 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private TabItem mLearning_tab;
     private TabItem mSkillIq_tab;
     private PagerAdapter mPagerAdapter;
-    private Adapter mAdapter;
-    private RecyclerView listLearners;
-    private MenuItem mSubmit;
     private Toolbar toolbar;
+    private View mView;
+    private LayoutInflater inflater;
 
 
     @Override
@@ -36,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.myToolbar);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.submit).setOnClickListener(new View.OnClickListener() {
+
+        Button button = (Button)findViewById(R.id.submit);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivity();
@@ -44,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             private void openActivity() {
-               Intent i = new Intent(MainActivity.this,
-                       SubmissionActivity.class);
-               startActivity(i);
+                Intent i = new Intent(MainActivity.this,
+                        SubmissionActivity.class);
+                startActivity(i);
 
             }
         });
@@ -87,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
     }
+
 
 }
 
